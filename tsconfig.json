@@ -3,6 +3,11 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "paths": {
+      "@shared/*": [
+        "src/app/common/shared/*"
+      ],
+    },
     "sourceMap": true,
     "declaration": false,
     "module": "es2015",
