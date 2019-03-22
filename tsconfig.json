@@ -7,6 +7,12 @@
       "@shared/*": [
         "src/app/common/shared/*"
       ],
+      "@classes/*": [
+        "src/app/common/classes/*"
+      ],
+      "@services/*": [
+        "src/app/common/services/*"
+      ],
     },
     "sourceMap": true,
     "declaration": false,

@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatInputModule, MatToolbarModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatInputModule,
+  MatToolbarModule,
+  MatPaginatorIntl,
+  MatPaginatorModule
+} from '@angular/material';
 import { LayoutsModule } from './layouts/layouts.module';
+import { MatPaginatorIntlRu } from '@classes/mat-paginator-intl-ru';
 
 
 @NgModule({
@@ -13,7 +20,11 @@ import { LayoutsModule } from './layouts/layouts.module';
     MatButtonModule,
     MatInputModule,
     MatToolbarModule,
-    LayoutsModule
+    LayoutsModule,
+    MatPaginatorModule
+  ],
+  providers: [
+    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlRu}
   ]
 })
 export class SharedModule { }
