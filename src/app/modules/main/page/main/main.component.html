@@ -1,6 +1,6 @@
-<app-search></app-search>
-<mat-paginator [length]="length"
+<app-search (search)="onSearch($event)"></app-search>
+<mat-paginator *ngIf="totalResults" [length]="totalResults"
     [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-    (page)="pageEvent = $event">
+    (page)="pageEvent = $event"
+    hidePageSize="true">
 </mat-paginator>

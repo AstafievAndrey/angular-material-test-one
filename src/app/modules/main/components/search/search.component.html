@@ -1,6 +1,6 @@
 <div class="search">
   <mat-form-field class="full-width">
-    <input matInput placeholder="введите название">
+    <input [(ngModel)]="search" matInput placeholder="введите название">
   </mat-form-field>
-  <button mat-raised-button color="primary">поиск</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()">поиск</button>
 </div>

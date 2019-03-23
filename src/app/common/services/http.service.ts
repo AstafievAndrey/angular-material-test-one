@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
@@ -8,8 +8,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class HttpService {
 
-  constructor(private http: HttpClient,
-    private HttpHeaders: HttpHeaders) { }
+  constructor(private http: HttpClient) { }
 
   get (url: string): Observable<any> {
     return this.http.get<any>(url)

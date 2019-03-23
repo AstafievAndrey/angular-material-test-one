@@ -7,8 +7,9 @@ import {
   MatPaginatorIntl,
   MatPaginatorModule
 } from '@angular/material';
-import { LayoutsModule } from './layouts/layouts.module';
+
 import { MatPaginatorIntlRu } from '@classes/mat-paginator-intl-ru';
+import { LayoutsModule } from './layouts/layouts.module';
 
 
 @NgModule({
