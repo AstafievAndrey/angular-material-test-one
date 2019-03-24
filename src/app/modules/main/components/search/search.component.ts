@@ -15,7 +15,9 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit() {
-    this.searchEvent.emit(this.search)
+    if(this.search) {
+      this.searchEvent.emit(this.search);
+    }
   }
 
 }

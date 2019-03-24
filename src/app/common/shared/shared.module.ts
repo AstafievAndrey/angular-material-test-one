@@ -5,7 +5,9 @@ import {
   MatInputModule,
   MatToolbarModule,
   MatPaginatorIntl,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatCardModule,
+  MatIconModule,
 } from '@angular/material';
 
 import { MatPaginatorIntlRu } from '@classes/mat-paginator-intl-ru';
@@ -22,7 +24,9 @@ import { LayoutsModule } from './layouts/layouts.module';
     MatInputModule,
     MatToolbarModule,
     LayoutsModule,
-    MatPaginatorModule
+    MatCardModule,
+    MatPaginatorModule,
+    MatIconModule,
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: MatPaginatorIntlRu}
