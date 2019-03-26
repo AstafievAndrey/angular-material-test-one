@@ -1,0 +1,12 @@
+<div class="search-container">
+    <app-search (onSubmit)="onFilter($event)" btnText="фильтр"></app-search>
+</div>
+<div *ngIf="favorites.length === 0">
+    Добавьте видео в избранное.
+</div>
+<app-short-info-video
+        *ngFor="let item of favoritesCopy;"
+        [item]="item.data"
+        (setFavorite)="setFavorite($event)"
+        >
+</app-short-info-video>

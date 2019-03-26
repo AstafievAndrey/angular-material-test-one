@@ -1,9 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { PageEvent, MatSnackBar } from '@angular/material';
-import { YoutubeService } from '@services/youtube.service';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { IndexedDbService } from '@services/indexed-db.service';
+
+import { YoutubeService } from '@services/youtube.service';
+import { MainModuleService } from '../../services/main-module.service';
 
 @Component({
   selector: 'app-main',
@@ -13,22 +14,38 @@ import { IndexedDbService } from '@services/indexed-db.service';
 })
 export class MainComponent implements OnInit {
   public search: string;
-  public data: any;
+  public pageToken: {next: string, previous: string};
   public data$: Observable<any>;
   public pageIndex = 0;
+  public favorites: string[] = [];
 
   constructor(
     private youtube: YoutubeService,
-    private indexedDb: IndexedDbService,
+    private mainModuleService: MainModuleService,
     public snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
+    this.mainModuleService.getAllFavorites()
+    .subscribe(
+      data => {
+        this.favorites.push(data.videoId);
+      }
+    );
   }
 
   private getData(search: string, pageToken: string = null): Observable<any> {
     return this.youtube.search(search, pageToken).pipe(
-      map(data => this.data = data),
+      map(data => {
+        for (const item of data.items) {
+          item.favorite = this.favorites.indexOf(item.id.videoId) !== -1 ? true : false;
+        }
+        this.pageToken = {
+          previous: data.previousPageToken,
+          next: data.nextPageToken
+        };
+        return data;
+      }),
       catchError(err => {
         if (err.status) {
           this.snackBar.open('Превышен лимит запросов.');
@@ -40,25 +57,29 @@ export class MainComponent implements OnInit {
     );
   }
 
-  public setFavorite(id: any): void {
-    this.indexedDb.add('favorites', { videoId: id.videoId });
-  }
-
-  public checkFavorite(videoId: string): void {
-    this.indexedDb.get('favorites', 'favorites', 'videoId', videoId)
-    .subscribe(data => console.log(data));
+  public setFavorite(data: any = null): void {
+    const { videoId } = data.id;
+    if (data.favorite) {
+      data.favorite = false;
+      this.mainModuleService.searchDeleteFavorite(videoId);
+    } else {
+      data.favorite = true;
+      this.mainModuleService.addFavorite({ videoId: data.id.videoId, ...data });
+    }
   }
 
   public changePage(pageEvent: PageEvent): void {
     this.pageIndex = pageEvent.pageIndex;
     const pageToken = (this.pageIndex > pageEvent.previousPageIndex) ?
-      this.data.nextPageToken : this.data.previousPageToken;
+      this.pageToken.next : this.pageToken.previous;
     this.data$ = this.youtube.search(this.search, pageToken);
   }
 
   public onSearch(search: string): void {
-    this.search = search;
-    this.data$ = this.getData(this.search);
+    if (search) {
+      this.search = search;
+      this.data$ = this.getData(this.search);
+    }
   }
 
 }

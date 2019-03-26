@@ -1,0 +1,26 @@
+.card {
+    margin-top: 10px;
+    min-height: 90px;
+}
+.desc {
+    word-break: break-all;
+}
+.favorite {
+    cursor: pointer;
+}
+.header-text {
+    width: 100%;
+}
+.header-image {
+    width: 120px;
+}
+.header-image img {
+    width: 100%;
+}
+.short-info {
+    text-align: right;
+}
+.short-info .date {
+    position: relative;
+    top: -6px;
+}

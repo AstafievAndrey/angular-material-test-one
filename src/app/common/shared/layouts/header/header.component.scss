@@ -1,8 +1,7 @@
-.fill-space {
-    flex: 1 1 auto;
-}
-
 .header {
     position: fixed;
     z-index: 1;
+}
+.header span {
+    margin-right: 10px;
 }

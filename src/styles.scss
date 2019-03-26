@@ -4,3 +4,11 @@ html, body {
     padding: 0px;
     margin: 0px;
 }
+
+.link {
+    cursor: pointer;
+    outline: none;
+}
+.link:hover {
+    color: whitesmoke;
+}

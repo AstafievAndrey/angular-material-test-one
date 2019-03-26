@@ -1,0 +1,23 @@
+<mat-card class="card">
+    <mat-card-header>
+        <div mat-card-avatar class="header-image">
+            <img src="{{item.snippet.thumbnails.default.url}}" alt="">
+        </div>
+        <div class="header-text">
+            <mat-card-title>{{item.snippet.title}}</mat-card-title>
+            <mat-card-subtitle class="card-subtitle">
+                <p class="desc">
+                    {{item.snippet.description}}
+                </p>
+                <p class="short-info">
+                    <mat-icon>date_range</mat-icon>
+                    <span class="date">{{item.snippet.publishedAt | date:'dd.MM.yyyy'}}</span>
+                    <mat-icon class="favorite" 
+                        (click)="onSetFavorite(item)">
+                        {{item.favorite ? 'favorite' : 'favorite_border'}}
+                    </mat-icon>
+                </p>
+            </mat-card-subtitle>
+        </div>
+    </mat-card-header>
+</mat-card>
