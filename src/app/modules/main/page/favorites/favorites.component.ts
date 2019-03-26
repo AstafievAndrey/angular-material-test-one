@@ -34,7 +34,7 @@ export class FavoritesComponent implements OnInit {
     }
   }
 
-  onFilter(filter: string): void {
+  onFilter(filter: string = ''): void {
     this.favoritesCopy = this.favorites.filter((item) => {
       const { title } = item.data.snippet;
       return (title.toLowerCase().indexOf(filter.toLowerCase()) !== -1);
