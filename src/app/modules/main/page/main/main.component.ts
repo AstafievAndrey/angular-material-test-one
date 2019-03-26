@@ -37,11 +37,15 @@ export class MainComponent implements OnInit {
     );
   }
 
+  private checkFavorite(videoId: string) {
+    return this.favorites.indexOf(videoId);
+  }
+
   private getData(search: string, pageToken: string = null): Observable<YoutubeResult> {
     return this.youtube.search(search, pageToken).pipe(
       map((data: YoutubeResult): any  => {
         for (const item of data.items) {
-          item.favorite = this.favorites.indexOf(item.id.videoId) !== -1 ? true : false;
+          item.favorite = this.checkFavorite(item.id.videoId) !== -1 ? true : false;
         }
         this.pageToken = {
           previous: data.previousPageToken,
@@ -64,10 +68,12 @@ export class MainComponent implements OnInit {
     const { videoId } = data.id;
     if (data.favorite) {
       data.favorite = false;
+      this.favorites.splice(this.checkFavorite(videoId), 1);
       this.mainModuleService.searchDeleteFavorite(videoId);
     } else {
       data.favorite = true;
-      this.mainModuleService.addFavorite({ videoId: data.id.videoId, ...data });
+      this.favorites.push(videoId);
+      this.mainModuleService.addFavorite({ videoId, ...data });
     }
   }
 
@@ -75,7 +81,7 @@ export class MainComponent implements OnInit {
     this.pageIndex = pageEvent.pageIndex;
     const pageToken = (this.pageIndex > pageEvent.previousPageIndex) ?
       this.pageToken.next : this.pageToken.previous;
-    this.data$ = this.youtube.search(this.search, pageToken);
+    this.data$ = this.getData(this.search, pageToken);
   }
 
   public onSearch(search: string): void {
