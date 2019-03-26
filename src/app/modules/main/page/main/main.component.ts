@@ -4,7 +4,10 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { YoutubeService } from '@services/youtube.service';
+import { YoutubeResult } from '@interfaces/youtube-result';
+import { YoutubeItem } from '@interfaces/youtube-item';
 import { MainModuleService } from '../../services/main-module.service';
+import { IndexedDbFavorite } from '@interfaces/indexed-db-favorite';
 
 @Component({
   selector: 'app-main',
@@ -15,7 +18,7 @@ import { MainModuleService } from '../../services/main-module.service';
 export class MainComponent implements OnInit {
   public search: string;
   public pageToken: {next: string, previous: string};
-  public data$: Observable<any>;
+  public data$: Observable<YoutubeResult>;
   public pageIndex = 0;
   public favorites: string[] = [];
 
@@ -28,15 +31,15 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.mainModuleService.getAllFavorites()
     .subscribe(
-      data => {
+      (data: IndexedDbFavorite) => {
         this.favorites.push(data.videoId);
       }
     );
   }
 
-  private getData(search: string, pageToken: string = null): Observable<any> {
+  private getData(search: string, pageToken: string = null): Observable<YoutubeResult> {
     return this.youtube.search(search, pageToken).pipe(
-      map(data => {
+      map((data: YoutubeResult): any  => {
         for (const item of data.items) {
           item.favorite = this.favorites.indexOf(item.id.videoId) !== -1 ? true : false;
         }
@@ -57,7 +60,7 @@ export class MainComponent implements OnInit {
     );
   }
 
-  public setFavorite(data: any = null): void {
+  public setFavorite(data: YoutubeItem = null): void {
     const { videoId } = data.id;
     if (data.favorite) {
       data.favorite = false;

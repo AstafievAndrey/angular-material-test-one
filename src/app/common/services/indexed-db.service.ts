@@ -79,7 +79,6 @@ export class IndexedDbService {
     if (!thisDB.objectStoreNames.contains('favorites')) {
       const store = thisDB.createObjectStore('favorites', { keyPath: 'id', autoIncrement: true });
       store.createIndex('videoId', 'videoId', { unique: true });
-      store.add({videoId: 'iVRbH_-Bdvo'});
     }
   }
 }

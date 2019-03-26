@@ -13,6 +13,9 @@
       "@services/*": [
         "src/app/common/services/*"
       ],
+      "@interfaces/*": [
+        "src/app/common/interfaces/*"
+      ],
     },
     "sourceMap": true,
     "declaration": false,

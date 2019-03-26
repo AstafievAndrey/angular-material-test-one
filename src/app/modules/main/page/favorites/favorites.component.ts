@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
+import { IndexedDbFavorite } from '@interfaces/indexed-db-favorite';
+import { YoutubeItem } from '@interfaces/youtube-item';
 import { MainModuleService } from '../../services/main-module.service';
 
 @Component({
@@ -8,20 +11,20 @@ import { MainModuleService } from '../../services/main-module.service';
 })
 export class FavoritesComponent implements OnInit {
 
-  public favorites: any[] = [];
-  public favoritesCopy: any[] = [];
+  public favorites: IndexedDbFavorite[] = [];
+  public favoritesCopy: IndexedDbFavorite[] = [];
 
   constructor(private mainModuleService: MainModuleService) { }
 
   ngOnInit() {
     this.mainModuleService.getAllFavorites()
-    .subscribe(data => {
+    .subscribe((data: IndexedDbFavorite) => {
       this.favorites.push(data);
       this.favoritesCopy.push(data);
     });
   }
 
-  setFavorite(data: any): void {
+  setFavorite(data: YoutubeItem): void {
     if (data.favorite === true) {
       data.favorite = false;
       this.mainModuleService.searchDeleteFavorite(data.videoId);

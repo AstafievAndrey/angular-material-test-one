@@ -10,7 +10,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  get (url: string): Observable<any> {
+  get(url: string): Observable<any> {
     return this.http.get<any>(url)
       .pipe(
         tap(_ => console.log(`get "${url}"`)),
@@ -18,7 +18,7 @@ export class HttpService {
       );
   }
 
-  post (url: string, data: any): Observable<any> {
+  post(url: string, data: any): Observable<any> {
     return this.http.post<any>(url, data)
       .pipe(
         tap(_ => console.log(`post "${url}"`)),

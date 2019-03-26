@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IndexedDbService } from '@services/indexed-db.service';
 import { Observable } from 'rxjs';
+
+import { IndexedDbService } from '@services/indexed-db.service';
+import { IndexedDbFavorite } from '@interfaces/indexed-db-favorite';
+import { YoutubeItem } from '@interfaces/youtube-item';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +12,7 @@ export class MainModuleService {
 
   constructor(private indexedDb: IndexedDbService, ) { }
 
-  getAllFavorites(): Observable<any> {
+  getAllFavorites(): Observable<IndexedDbFavorite> {
     return this.indexedDb.getAll('favorites', 'favorites');
   }
 
@@ -22,7 +25,7 @@ export class MainModuleService {
       });
   }
 
-  addFavorite(data: any): void {
+  addFavorite(data: YoutubeItem): void {
     this.indexedDb.add('favorites', { videoId: data.videoId, data });
   }
 }
